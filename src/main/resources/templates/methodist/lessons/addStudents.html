@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>AddStudents</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Выбрать студентов на урок</h2>
+	<form th:action="@{/methodist/lessons/returnStudents}" method="post">
+		<input type="hidden" name="from" th:value="${dto.from}" /> <input
+			type="hidden" name="startTime" th:value="${dto.startTime}" /> <input
+			type="hidden" name="endTime" th:value="${dto.endTime}" /> <input
+			type="hidden" name="courseId" th:value="${dto.courseId}" /> <input
+			type="hidden" name="roomId" th:value="${dto.roomId}" />
+		<div th:if="${source == 'dto'}">
+			<input type="hidden" name="source" value="dto" />
+		</div>
+		<div th:if="${source == 'updateDto'}">
+			<input type="hidden" name="source" value="updateDto" /> <input
+				type="hidden" name="lessonId" th:value="${dto.lessonId}" />
+		</div>
+		<th:block th:if="${source == 'updateDto'}"
+			th:each="d : ${dto.studentIds}">
+			<input type="hidden" name="studentIds" th:value="${d}" />
+		</th:block>
+
+		<div th:each="s : ${pageStudent.content}">
+			<input th:if="${source == 'dto'}" type="checkbox" name="studentIds"
+				th:value="${s.id}" th:id="'dto_student_' + ${s.id}"
+				th:checked="${dto.studentIds.contains(s.id)}" /> <label
+				th:if="${source == 'dto'}" th:for="'dto_student_' + ${s.id}"
+				th:text="${s.user.firstName + ' ' + s.user.lastName}"></label> <input
+				th:if="${source == 'updateDto'}" type="checkbox" name="studentIds"
+				th:value="${s.id}" th:id="'update_student_' + ${s.id}"
+				th:checked="${dto.studentIds.contains(s.id)}" /> <label
+				th:if="${source == 'updateDto'}"
+				th:for="'update_student_' + ${s.id}"
+				th:text="${s.user.firstName + ' ' + s.user.lastName}"></label>
+		</div>
+		<p></p>
+		<ul th:replace="pagination :: content"></ul>
+		<p></p>
+		<div>
+			Выбрано студентов: <span
+				th:text="${dto.studentIds != null ? dto.studentIds.size() : 0}"></span>
+		</div>
+		<p></p>
+		<div th:if="${source == 'updateDto' and currentStudents != null}"
+			th:each="s : ${currentStudents}">
+			<input type="checkbox" name="studentIds" th:value="${s.id}"
+				th:id="'update_student_' + ${s.id}"
+				th:checked="${dto.studentIds.contains(s.id)}" /> <label
+				th:if="${source == 'updateDto' and currentStudents != null}"
+				th:for="'update_student_' + ${s.id}"
+				th:text="${s.user.firstName + ' ' + s.user.lastName}"></label>
+		</div>
+		<button type="submit">Добавить</button>
+	</form>
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+	<div>
+		<h2>
+			<a th:href="@{/methodist/lessons}">Назад</a>
+		</h2>
+	</div>
+</body>
+</html>

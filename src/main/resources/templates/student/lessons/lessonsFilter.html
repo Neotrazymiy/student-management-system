@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lessons</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<form th:object="${filter}" th:action="@{${basePath}}">
+			<select th:field="*{courseId}">
+				<option value="">--Выбирите курс--</option>
+				<option th:each="c : ${courses}" th:text="${c.courseName}"
+					th:value="${c.id}"></option>
+			</select><br> <select th:field="*{groupId}"><option value="">--Выбирите
+					группу--</option>
+				<option th:each="g : ${pageGroup.content}" th:text="${g.name}"
+					th:value="${g.id}"></option>
+			</select>
+			<div class="pagination">
+				<a th:if="${pageGroup.hasPrevious()}"
+					th:href="@{${basePath}(
+       groupPage=${pageGroup.number - 1},
+       groupSize=${pageGroup.size},
+       page=${currentPage},
+       size=${pageSize},
+       courseId=${filter.courseId},
+       groupId=${filter.groupId},
+       teacherId=${filter.teacherId},
+       roomId=${filter.roomId}
+   )}">
+					Prev Group </a> <span>[[${pageGroup.number + 1}]] /
+					[[${pageGroup.totalPages}]]</span> <a th:if="${pageGroup.hasNext()}"
+					th:href="@{${basePath}(
+       groupPage=${pageGroup.number + 1},
+       groupSize=${pageGroup.size},
+       page=${currentPage},
+       size=${pageSize},
+       courseId=${filter.courseId},
+       groupId=${filter.groupId},
+       teacherId=${filter.teacherId},
+       roomId=${filter.roomId}
+   )}">
+					Next Group </a>
+			</div>
+			<select th:field="*{teacherId}"><option value="">--Выбирите
+					учителя--</option>
+				<option th:each="t : ${teachers}"
+					th:text="${t.user.firstName + ' ' + t.user.lastName}"
+					th:value="${t.id}"></option>
+			</select><br> <select th:field="*{roomId}"><option value="">--Выбирите
+					аудиторию--</option>
+				<option th:each="r : ${rooms}" th:text="${r.number}"
+					th:value="${r.id}"></option>
+			</select><br> <label for="from">Дата: <input id="from"
+				type="date" name="from" th:field="*{from}" /></label>
+			<div th:if="${errors}">
+				<p style="color: red" th:each="e : ${errors}"
+					th:text="${e.defaultMessage}">Error Message</p>
+			</div>
+			<div>
+				Диапазон: <select th:field="*{dateFilter}">
+					<option value="">--выбирите диапазон--</option>
+					<option th:value="DAY">день</option>
+					<option th:value=WEEK>неделя</option>
+					<option th:value="MONTH">месяц</option>
+				</select>
+			</div>
+			<button type="submit">Filter</button>
+		</form>
+	</div>
+	<div th:replace="readLessons :: lessons"></div>
+	<div>
+		<h2>
+			<a th:href="@{/home}">Home</a>
+		</h2>
+	</div>
+</body>
+</html>

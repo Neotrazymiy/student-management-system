@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<ul th:fragment="teacher">
+		<li>
+			<h1>
+				<a th:href="@{/teacher/courses}">Список курсов</a>
+			</h1>
+		</li>
+		<li>
+			<h1>
+				<a th:href="@{/teacher/groups}">Список групп</a>
+			</h1>
+		</li>
+		<li>
+			<h1>
+				<a th:href="@{/teacher/students}">Список студентов</a>
+			</h1>
+		</li>
+		<li>
+			<h1>
+				<a th:href="@{/teacher/lessonsSchedule}">Моё расписание</a>
+			</h1>
+		</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>My Schedule</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<form th:object="${filter}" th:action="@{${basePath}}">
+			<select th:field="*{courseId}">
+				<option value="">--Выбирите курс--</option>
+				<option th:each="c : ${courses}" th:text="${c.courseName}"
+					th:value="${c.id}"></option>
+			</select><br> <select th:field="*{teacherId}">
+				<option value="">--Выбирите учителя--</option>
+				<option th:each="t : ${teachers}"
+					th:text="${t.user.firstName + ' ' + t.user.lastName}"
+					th:value="${t.id}"></option>
+			</select><br> <select th:field="*{roomId}">
+				<option value="">--Выбирите аудиторию--</option>
+				<option th:each="r : ${rooms}" th:text="${r.number}"
+					th:value="${r.id}"></option>
+			</select><br> <select th:field="*{departmentId}">
+				<option value="">--Вибирите департамент--</option>
+				<option th:each="d : ${departments}" th:text="${d.name}"
+					th:value="${d.id}"></option>
+			</select><br> <label for="from">Дата: <input id="from"
+				type="date" th:field="*{from}" /></label> <label for="to"><input
+				id="to" type="date" th:field="*{to}" /></label>
+			<div th:if="${errors}">
+				<p style="color: red" th:each="e : ${errors}"
+					th:text="${e.defaultMessage}">Error Message</p>
+			</div>
+			<div>
+				Диапазон: <select th:field="*{dateFilter}">
+					<option value="">--выбирите диапазон--</option>
+					<option th:value="DAY">день</option>
+					<option th:value=WEEK>неделя</option>
+					<option th:value="MONTH">месяц</option>
+					<option th:value="CURRENT_MONTH">текущий месяц</option>
+					<option th:value="CASTOM">свой</option>
+				</select>
+			</div>
+			<button type="submit">Filter</button>
+		</form>
+	</div>
+	<h2>Моё росписание</h2>
+	<div th:replace="readLessons :: lessons"></div>
+	<a
+		th:href="@{/student/studentSchedule/export(
+        from=${filter.from},
+        to=${filter.to},
+        courseId=${filter.courseId},
+        teacherId=${filter.teacherId},
+        roomId=${filter.roomId},
+        departmentId=${filter.departmentId}
+    )}"
+		class="btn btn-outline-primary">Скачать расписание</a>
+	<div>
+		<h2>
+			<a th:href="@{/home}">Home</a>
+		</h2>
+	</div>
+</body>
+</html>

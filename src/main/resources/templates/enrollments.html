@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lessons</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<h2>Lessons</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Grade</th>
+					<th>Status</th>
+					<th>StudentFirstName</th>
+					<th>CourseName</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="e : ${pageEnrollment.content}">
+					<td th:text="${e.id}"></td>
+					<td th:text="${e.grade}"></td>
+					<td th:text="${e.status}"></td>
+					<td th:text="${e.student.user.firstName}"></td>
+					<td th:text="${e.course.courseName}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<ul th:replace="pagination :: content">
+		</ul>
+		<h1>
+			<a th:href="@{/}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

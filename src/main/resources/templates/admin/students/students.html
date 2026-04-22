@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Список студентов</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		Группа
+		<form th:action="@{/admin/students}">
+			<input type="hidden" name="page" th:value="${currentPage}" /> <input
+				type="hidden" name="size" th:value="${pageSize}" /> <select
+				name="groupId">
+				<option value="">--Выбирите группу--</option>
+				<option th:each="g : ${pageGroup.content}" th:text="${g.name}"
+					th:value="${g.id}"
+					th:selected="${groupId != null and g.id == groupId}"></option>
+			</select>
+			<div th:replace="groupPagination :: groupPagination(${basePath})"></div>
+			<button type="submit">Filter</button>
+		</form>
+	</div>
+	<br>
+	<h2>Список студентов</h2>
+	<table>
+		<tr>
+			<th>Имя</th>
+			<th>Фамилия</th>
+			<th>Роль</th>
+			<th>Дуйствия</th>
+		</tr>
+		<tr th:each="s : ${pageStudent.content}">
+			<td th:text=${s.user.getFirstName()}></td>
+			<td th:text="${s.user.getLastName()}"></td>
+			<td th:text="${#strings.listJoin(s.user.roles.![name], ', ')}"></td>
+			<td><a th:href="@{/admin/students/{id}(id=${s.id})}">Редактировать
+					студента</a>
+				<form th:action="@{/admin/students/{id}/delete(id=${s.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Удалить</button>
+				</form></td>
+		</tr>
+	</table>
+	<ul th:replace="pagination :: content"></ul>
+	<h1>
+		<a th:href="@{/home}">Home</a>
+	</h1>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div th:fragment="readStudents">
+	<h2>Студенты</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Имя</th>
+				<th>Фамилия</th>
+				<th>Группа</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="s : ${pageStudent.content}">
+				<td th:text="${s.user.firstName}"></td>
+				<td th:text="${s.user.lastName}"></td>
+				<td th:text="${s.group?.name}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<ul th:replace="pagination :: content">
+	</ul>
+</div>

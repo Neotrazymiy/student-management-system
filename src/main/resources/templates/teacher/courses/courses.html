@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Course</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div th:replace="readCourses :: courses"></div>
+	<div>
+		<h2>
+			<a th:href="@{/home}">Home</a>
+		</h2>
+	</div>
+</body>
+</html>

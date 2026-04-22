@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Universitys</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<h2>Universitys</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="u : ${universitys}">
+					<td th:text="${u.name}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+
+</body>
+</html>

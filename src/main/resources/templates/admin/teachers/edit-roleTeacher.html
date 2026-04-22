@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Выбор ролей</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Редактирование ролей для пользователя [[${user.userName}]]</h2>
+
+	<form th:action="@{|/admin/teachers/${user.id}/roles|}" method="post">
+		<input type="hidden" name="returnUrl" th:value="${returnUrl}" />
+		<!-- возвращает в /admin/teachers -->
+		<div th:each="role : ${role}">
+			<label> <input type="checkbox" name="roleIds"
+				th:value="${role.id}" th:checked="${user.roles.contains(role)}"
+				th:data-rolename="${role.name}" onclick="handleRoleClick(this)" />
+				<span th:text="${role.name}"></span>
+			</label>
+		</div>
+		<button type="submit">Сохранить</button>
+	</form>
+	<script>
+    function handleRoleClick(checkbox) {
+        const allCheckboxes = document.querySelectorAll("input[name='roleIds']");
+        const roleName = checkbox.getAttribute("data-rolename");
+
+        if (roleName === "ROLE_STUDENT" || roleName === "ROLE_QUEST") {
+            if (checkbox.checked) {
+                allCheckboxes.forEach(cb => {
+                    if (cb !== checkbox) cb.checked = false;
+                });
+            } else {
+                checkbox.checked = true;
+            }
+        } else {
+            if (checkbox.checked) {
+                allCheckboxes.forEach(cb => {
+                    const name = cb.getAttribute("data-rolename");
+                    if (name === "ROLE_STUDENT" || name === "ROLE_QUEST") {
+                        cb.checked = false;
+                    }
+                });
+            } else {
+                const anyChecked = Array.from(allCheckboxes).some(cb => cb.checked);
+                if (!anyChecked) {
+                    checkbox.checked = true;
+                }
+            }
+        }
+        if (roleName === "ROLE_ADMIN" || roleName === "ROLE_METHODIST") {
+
+            if (checkbox.checked) {
+                allCheckboxes.forEach(cb => {
+                    const name = cb.getAttribute("data-rolename");
+                    if (cb !== checkbox && (name === "ROLE_ADMIN" || name === "ROLE_METHODIST")) {
+                        cb.checked = false;
+                    }
+                });
+            } else {
+                const anyOther = Array.from(allCheckboxes).some(cb =>
+                    cb !== checkbox && cb.checked
+                );
+                if (!anyOther) {
+                    checkbox.checked = true;
+                }
+            }
+
+        } else if (roleName === "ROLE_TEACHER") {
+            if (!checkbox.checked) {
+                const anyOther = Array.from(allCheckboxes).some(cb =>
+                    cb !== checkbox && cb.checked
+                );
+                if (!anyOther) {
+                    checkbox.checked = true;
+                }
+            }
+        }
+    }
+</script>
+
+	<h2>
+		<a th:href="@{/admin/teachers/{id}(id=${teacher.id})}">Редактирование
+			учителя</a>
+	</h2>
+</body>
+</html>

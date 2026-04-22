@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Ошибка</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h1>cannot be deleted/Нельзя удалить</h1>
+
+	<h3 th:text="${exception}"></h3>
+
+	<div>
+		<h1>
+			<a th:href="@{/admin/universitys}"></a>
+		</h1>
+	</div>
+</body>
+</html>

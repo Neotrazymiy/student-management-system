@@ -1,0 +1,16 @@
+<ul th:fragment="content">
+	<li th:classappend="${currentPage == 0} ? 'disabled'"><a
+		th:if="${currentPage > 0}"
+		th:href="@{${basePath}(page=${currentPage - 1}, size=${pageSize})}">Prev</a>
+		<span th:if="${currentPage == 0}">Prev</span></li>
+	<li th:each="i :${#numbers.sequence(0, totalPage - 1)}"
+		th:if="${totalPage > 1}"
+		th:classappend="${i == currentPage} ? 'active'"><a
+		th:href="@{${basePath}(page=${i}, size=${pageSize})}"
+		th:text="${i + 1}"> </a></li>
+	<li th:classappend="${currentPage + 1 >= totalPage} ? 'disabled'">
+		<a th:if="${currentPage + 1 < totalPage}"
+		th:href="@{${basePath}(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+		<span th:if="${currentPage + 1 >= totalPage}">Next</span>
+	</li>
+</ul>

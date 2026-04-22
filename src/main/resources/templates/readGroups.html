@@ -1,0 +1,18 @@
+<div th:fragment="groups">
+	<table>
+		<thead>
+			<tr>
+				<td>Название группы</td>
+				<td>Название департамента</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="g : ${pageGroup.content}">
+				<td th:text="${g.name}"></td>
+				<td th:text="${g.department.name}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul th:if="${totalPage != null}" th:replace="pagination :: content"></ul>
+</div>

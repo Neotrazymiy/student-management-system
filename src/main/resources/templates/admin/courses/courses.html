@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Course</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+
+	<table>
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Департамент</td>
+				<td>Группы</td>
+				<td>Действия</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="c : ${pageCourse.content}">
+				<form th:action="@{/admin/courses/{id}/update(id=${c.id})}"
+					method="post">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<td><input type="text" name=courseName
+						th:value="${c.courseName}" required /></td>
+					<td><select name="departmentId" required>
+							<option value="">-- вибирите департамент --</option>
+							<option th:each="d : ${departments}" th:text="${d.name}"
+								th:value="${d.id}"
+								th:selected="${c.department != null and c.department.id == d.id}"></option>
+					</select></td>
+					<td><span th:each="g : ${c.groups}"><span
+							th:if="${g != null}" th:text="${g.name}"></span></span> <select
+						name="groupId">
+							<option value="">-- Добавить группу --</option>
+							<option th:each="g : ${pageGroup.content}" th:value="${g.id}"
+								th:text="${g.name}"></option>
+					</select>
+						<div th:replace="groupPagination :: groupPagination(${url})"></div>
+						<button type="submit">Сохранить изменения</button></td>
+				</form>
+				<td>
+					<form th:action="@{/admin/courses/{id}/delete(id=${c.id})}"
+						method="post">
+						<input type="hidden" name="page" th:value="${currentPage}" /> <input
+							type="hidden" name="size" th:value="${pageSize}" />
+						<button type="submit" style="margin-top: 20px;">Удалить
+							курс</button>
+					</form> <span th:each="g, stat : ${c.groups}">
+						<form
+							th:action="@{/admin/courses/{courseId}/groups/{groupName}/delete(courseId=${c.id}, groupName=${g.name})}"
+							method="post">
+							<input type="hidden" name="page" th:value="${currentPage}" /> <input
+								type="hidden" name="size" th:value="${pageSize}" />
+							<button type="submit">
+								Удалить - <span th:text="${g.name}"></span>
+							</button>
+						</form>
+				</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<form th:action="@{/admin/courses/new}" method="post"
+		th:object="${newCourse}" th:if="${currentPage + 1 == totalPage}">
+		<input type="hidden" name="page" th:value="${currentPage}" /> <input
+			type="hidden" name="size" th:value="${pageSize}" /> <input
+			type="text" th:field="*{courseName}" placeholder="Название курса"
+			required /> <select th:field="*{departmentId}" required>
+			<option value="">-- выберите департамент --</option>
+			<option th:each="d : ${departments}" th:value="${d.id}"
+				th:text="${d.name}"></option>
+		</select> <select th:field="*{groupId}">
+			<option value="">-- выберите группу --</option>
+			<option th:each="g : ${pageGroup.content}" th:value="${g.id}"
+				th:text="${g.name}"></option>
+		</select>
+		<div class="pagination">
+			<a th:if="${pageGroup.hasPrevious()}"
+				th:href="@{'/admin/courses'(groupPage=${pageGroup.number - 1}, groupSize=${pageGroup.size})}">
+				Prev Group </a> <span>[[${pageGroup.number + 1}]] /
+				[[${pageGroup.totalPages}]]</span> <a th:if="${pageGroup.hasNext()}"
+				th:href="@{'/admin/courses'(groupPage=${pageGroup.number + 1}, groupSize=${pageGroup.size})}">
+				Next Group </a>
+		</div>
+		<button type="submit" style="margin-top: 10px;">Добавить курс</button>
+	</form>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<ul th:replace="pagination :: content"></ul>
+
+	<div>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

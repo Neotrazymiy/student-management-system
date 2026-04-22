@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Faculty</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>University</td>
+				<td>Действия</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="f : ${facultys}">
+				<form th:action="@{/admin/facultys/{id}/update(id=${f.id})}"
+					method="post">
+					<td><input name="name" type="text" th:value="${f.name}"
+						required /></td>
+					<td><select name="universityId" required>
+							<option value="">-- выберите университет --</option>
+							<option th:each="u : ${universitys}" th:value="${u.id}"
+								th:text="${u.name}"
+								th:selected="${f.university != null and f.university.id == u.id}">
+							</option>
+					</select>
+						<button type="submit" class="btn btn-primary">Сохранить
+							изменения</button></td>
+				</form>
+				<td>
+					<form th:action="@{/admin/facultys/{id}/delete(id=${f.id})}"
+						method="post">
+						<button type="submit">Удалить</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div>
+		<form th:object="${newFaculty}" th:action="@{/admin/facultys/new}"
+			method="post">
+			<input type="text" th:field="*{name}"
+				placeholder="Название факультета" required /> <select
+				th:field="*{universityId}" required>
+				<option value="">-- выберите университет --</option>
+				<option th:each="u : ${universitys}" th:value="${u.id}"
+					th:text="${u.name}"></option>
+			</select>
+			<button type="submit">Создать факультет</button>
+		</form>
+	</div>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<div>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+
+</body>
+</html>

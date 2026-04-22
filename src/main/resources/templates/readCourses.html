@@ -1,0 +1,20 @@
+<div th:fragment="courses">
+	<table>
+		<thead>
+			<tr>
+				<td>Название курса</td>
+				<td>Название департамента</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="c : ${courses}">
+				<td th:text="${c.courseName}"></td>
+				<td th:text="${c.department.name}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div th:if="${totalPage != null}">
+		<ul th:replace="pagination :: content"></ul>
+	</div>
+</div>

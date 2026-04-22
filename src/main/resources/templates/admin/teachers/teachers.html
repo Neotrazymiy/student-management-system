@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Список учителей</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Список учителей</h2>
+
+	<table>
+		<tr>
+			<td>Имя</td>
+			<td>Фамилия</td>
+			<td>Действия</td>
+		</tr>
+		<tr th:each="t : ${pageTeacher.content}">
+			<td th:text="${t.user.firstName}"></td>
+			<td th:text="${t.user.lastName}"></td>
+			<td th:text="${#strings.listJoin(t.user.roles.![name], ', ')}"></td>
+			<td><a th:href="@{/admin/teachers/{id}(id=${t.id})}">Редактировать
+					учителя</a>
+				<form th:action="@{/admin/teachers/{id}/delete(id=${t.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Удалить</button>
+				</form></td>
+		</tr>
+	</table>
+	<ul th:replace="pagination :: content"></ul>
+	<h2>
+		<a th:href="@{/home}">Home</a>
+	</h2>
+</body>
+</html>

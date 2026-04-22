@@ -1,0 +1,10 @@
+<div th:fragment="groupPagination(basePath)">
+	<a th:if="${pageGroup.hasPrevious()}"
+		th:href="@{${basePath}(groupPage=${pageGroup.number - 1}, groupSize=${pageGroup.size} page=${currentPage},
+       size=${pageSize}, groupId=${groupId})}">
+		Назад </a> <span>[[${pageGroup.number + 1}]] /
+		[[${pageGroup.totalPages}]]</span> <a th:if="${pageGroup.hasNext()}"
+		th:href="@{${basePath}(groupPage=${pageGroup.number + 1}, groupSize=${pageGroup.size} page=${currentPage},
+       size=${pageSize}, groupId=${groupId})}">
+		Вперёд </a>
+</div>

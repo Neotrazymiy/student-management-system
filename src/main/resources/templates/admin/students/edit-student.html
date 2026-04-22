@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Редактирование студента</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Редактирование студента</h2>
+
+	<form th:object="${student}"
+		th:action="@{/admin/students/{id}/update(id=${student.id})}"
+		method="post">
+		<input type="hidden" name="page" th:value="${currentPage}" /> <input
+			type="hidden" name="size" th:value="${pageSize}" /> <label>Логин:
+			<input type="text" th:field="*{user.userName}" />
+		</label><br> <label>Имя: <input type="text"
+			th:field="*{user.firstName}" /></label><br> <label>Фамилия: <input
+			type="text" th:field="*{user.lastName}" />
+		</label><br> <label>Mail: <input type="text"
+			th:field="*{user.email}" /></label><br> <label for="passwordHash">Пароль:
+			<input id="passwordHash" type="password"
+			th:field="*{user.passwordHash}" />
+		</label><br> <label>Группа: <span
+			th:text="${student.group != null ? student.group.name : '-'}"></span>
+			<a
+			th:href="@{|/admin/students/${student.id}/group-edit?returnUrl=/admin/students/${student.id}|}">Присвоить/Поменять
+				группу</a><input type="hidden" name="groupId"
+			th:value="${student.group != null ? student.group.id : null}" />
+		</label><br> <label>Роли: <span
+			th:each="role : ${student.user.roles}" th:text="${role.name} + ' '"></span><a
+			th:href="@{|/admin/students/${student.user.id}/roles?returnUrl=/admin/students/${student.id}|}">Редактировать/добавить</a>
+			<th:block th:each="role : ${student.user.roles}">
+				<input type="hidden" name="user.roleIds" th:value="${role.id}" />
+			</th:block></label><br>
+		<button type="submit">Сохранить</button>
+	</form>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+	<h2>
+		<a th:href="@{/admin/students}">Список студентов</a>
+	</h2>
+</body>
+</html>

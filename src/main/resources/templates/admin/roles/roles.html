@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Role</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>Роль</td>
+				<td>Действия</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="r : ${roles}">
+				<td>
+					<form th:action="@{/admin/roles/{id}/update(id=${r.id})}"
+						method="post">
+						<input type="text" name="name" th:value="${r.name}"
+							style="margin-bottom: 8px;" required />
+						<button type="submit">Сохранить изменения</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/admin/roles/{id}/delete(id=${r.id})}"
+						method="post" style="margin-bottom: 8px;">
+						<button type="submit">Удалить</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div>
+		<form th:object="${newRole}" th:action="@{/admin/roles/new}"
+			method="post">
+			<input type="text" th:field="*{name}" placeholder="Название роли"
+				required />
+			<button type="submit">Создать роль</button>
+		</form>
+	</div>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<div>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+
+</body>
+</html>

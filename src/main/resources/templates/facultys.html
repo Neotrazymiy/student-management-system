@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Facultys</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<h2>Facultys</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>University_id</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="f : ${facultys}">
+					<td th:text="${f.id}"></td>
+					<td th:text="${f.name}"></td>
+					<td th:text="${f.university.id}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<h1>
+			<a th:href="@{/}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

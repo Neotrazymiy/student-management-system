@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>AddGroups</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Выбрать группы на урок</h2>
+	<form th:action="@{/methodist/lessons/returnGroups}" method="post">
+		<input type="hidden" name="from" th:value="${dto.from}" /> <input
+			type="hidden" name="startTime" th:value="${dto.startTime}" /> <input
+			type="hidden" name="endTime" th:value="${dto.endTime}" /> <input
+			type="hidden" name="courseId" th:value="${dto.courseId}" /> <input
+			type="hidden" name="roomId" th:value="${dto.roomId}" />
+		<div th:if="${source == 'dto'}">
+			<input type="hidden" name="source" value="dto" />
+		</div>
+		<div th:if="${source == 'updateDto'}">
+			<input type="hidden" name="source" value="updateDto" /> <input
+				type="hidden" name="lessonId" th:value="${dto.lessonId}" />
+		</div>
+		<th:block th:if="${source == 'updateDto'}"
+			th:each="g : ${dto.groupIds}">
+			<input type="hidden" name="groupIds" th:value="${g}" />
+		</th:block>
+
+		<div th:each="g : ${pageGroup.content}">
+			<input th:if="${source == 'dto'}" type="checkbox" name="groupIds"
+				th:value="${g.id}" th:id="'dto_group_' + ${g.id}"
+				th:checked="${dto.groupIds.contains(g.id)}" /> <label
+				th:if="${source == 'dto'}" th:for="'dto_group_' + ${g.id}"
+				th:text="${g.name}"></label> <input th:if="${source == 'updateDto'}"
+				type="checkbox" name="groupIds" th:value="${g.id}"
+				th:id="'update_group_' + ${g.id}"
+				th:checked="${dto.groupIds.contains(g.id)}" /> <label
+				th:if="${source == 'updateDto'}" th:for="'update_group_' + ${g.id}"
+				th:text="${g.name}"></label>
+		</div>
+		<p></p>
+		<ul th:replace="pagination :: content"></ul>
+		<p></p>
+		<div>
+			Выбрано групп: <span
+				th:text="${dto.groupIds != null ? dto.groupIds.size() : 0}"></span>
+		</div>
+		<p></p>
+		<div th:if="${source == 'updateDto' and currentGroups != null}"
+			th:each="g : ${currentGroups}">
+			<input type="checkbox" name="groupIds" th:value="${g.id}"
+				th:id="'update_group_' + ${g.id}"
+				th:checked="${dto.groupIds.contains(g.id)}" /> <label
+				th:if="${source == 'updateDto' and currentGroups != null}"
+				th:for="'update_group_' + ${g.id}" th:text="${g.name}"></label>
+		</div>
+		<button type="submit">Добавить</button>
+	</form>
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+	<div>
+		<h2>
+			<a th:href="@{/methodist/lessons}">Назад</a>
+		</h2>
+	</div>
+</body>
+</html>

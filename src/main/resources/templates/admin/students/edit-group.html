@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Выбор группы</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+
+	<h2>Выбор/Смена группы [[${student.user.userName}]]</h2>
+	<form th:action="@{|/admin/students/${student.id}/group-edit|}"
+		method="post">
+		<input type="hidden" name="returnUrl" th:value="${returnUrl}" /> <label>
+			Выбирите группу: <select name="groupId">
+				<option th:each="g : ${groups}" th:value="${g.id}"
+					th:text="${g.name}"
+					th:selected="${student.group != null} ? ${g.id} == ${student.group.id} : false">
+				</option>
+		</select>
+		</label>
+		<button type="submit">Сохронить</button>
+	</form>
+
+	<h3>
+		<a th:href="@{/admin/students/{id}(id=${student.id})}">Редактирование
+			студента</a>
+	</h3>
+
+</body>
+</html>

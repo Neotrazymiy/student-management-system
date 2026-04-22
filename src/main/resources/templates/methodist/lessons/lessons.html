@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lessons</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Курс</th>
+				<th>Комната</th>
+				<th>Дата</th>
+				<th>Начало урока</th>
+				<th>Конец урока</th>
+				<th>Список групп</th>
+				<th>Список студентов</th>
+				<th>Действия</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="l : ${pageLesson.content}">
+				<td colspan="7">
+					<form th:action="@{/methodist/lessons/{id}/update(id=${l.id})}"
+						method="post">
+						<input type="hidden" name="status" th:value="${l.status}" /> <input
+							type="hidden" name="page" th:value="${currentPage}" /> <input
+							type="hidden" name="size" th:value="${pageSize}" /> <input
+							type="hidden" name="lessonId" th:value="${l.id}" /> <input
+							type="hidden" name="source" value="updateDto" />
+						<th:block
+							th:if="${studentsUpdateDto != null and updateDto != null and updateDto.lessonId == l.id}"
+							th:each="s : ${studentsUpdateDto}">
+							<input type="hidden" name="studentIds" th:value="${s.id}" />
+						</th:block>
+						<th:block
+							th:if="${updateDto.lessonId != l.id and lessonsStudents[l.id] != null and lessonsStudents[l.id]?.students != null and !lessonsStudents[l.id]?.students.isEmpty()}"
+							th:each="s : ${lessonsStudents[l.id]?.students}">
+							<input type="hidden" name="studentIds" th:value="${s.id}" />
+						</th:block>
+						<th:block
+							th:if="${groupsUpdateDto != null and updateDto != null and updateDto.lessonId == l.id}"
+							th:each="g : ${groupsUpdateDto}">
+							<input type="hidden" name="groupIds" th:value="${g.id}" />
+						</th:block>
+						<th:block
+							th:if="${updateDto.lessonId != l.id and lessonsStudents[l.id] != null and lessonsStudents[l.id]?.groups != null and !lessonsStudents[l.id]?.groups.isEmpty()}"
+							th:each="g : ${lessonsStudents[l.id]?.groups}">
+							<input type="hidden" name="groupIds" th:value="${g.id}" />
+						</th:block>
+
+						<table>
+							<tr>
+								<td><select name="courseId" required="required">
+										<option value="">--выбирите курс--</option>
+										<option th:each="c : ${courses}" th:text="${c.courseName}"
+											th:value="${c.id}" th:selected="${l.course.id == c.id}"></option>
+								</select></td>
+								<td><select name="roomId" required="required">
+										<option value="">--выбирите комнату--</option>
+										<option th:each="r : ${rooms}" th:text="${r.number}"
+											th:value="${r.id}" th:selected="${l.room.id == r.id}"></option>
+								</select></td>
+								<td><label for="from"><input id="from" type="date"
+										name="from"
+										th:value="${#temporals.format(l.date, 'yyyy-MM-dd')}"
+										required="required" /></label></td>
+								<td><label for="startTime"><input id="startTime"
+										type="time" min="08:00" max="19:10" name="startTime"
+										th:value="${#temporals.format(l.startTime, 'HH:mm')}"
+										required="required" /></label></td>
+								<td><label for="endTime"><input id="endTime"
+										type="time" min="08:50" max="20:00" name="endTime"
+										th:value="${#temporals.format(l.endTime, 'HH:mm')}"
+										required="required" /></label></td>
+								<td><select>
+										<option>--список групп--</option>
+										<option
+											th:if="${groupsUpdateDto != null and updateDto != null and updateDto.lessonId == l.id}"
+											th:each="g : ${groupsUpdateDto}" th:text="${g.name}"></option>
+										<option
+											th:if="${updateDto.lessonId != l.id and lessonsStudents[l.id] != null and lessonsStudents[l.id]?.groups != null and !lessonsStudents[l.id]?.groups.isEmpty() and lessonsStudents[l.id]?.students.isEmpty() and lessonsStudents[l.id]?.students.isEmpty()}"
+											th:each="g : ${lessonsStudents[l.id]?.groups}"
+											th:text="${g.name}"></option>
+								</select></td>
+								<td><select>
+										<option>--список студентов--</option>
+										<option
+											th:if="${studentsUpdateDto != null and updateDto != null and updateDto.lessonId == l.id}"
+											th:each="s : ${studentsUpdateDto}"
+											th:text="${s.user.firstName + ' ' + s.user.lastName}"></option>
+										<option
+											th:if="${updateDto.lessonId != l.id and lessonsStudents[l.id] != null and lessonsStudents[l.id]?.students != null and !lessonsStudents[l.id]?.students.isEmpty() and lessonsStudents[l.id]?.groups.isEmpty()}"
+											th:each="s : ${lessonsStudents[l.id]?.students}"
+											th:text="${s.user.firstName + ' ' + s.user.lastName}"></option>
+								</select>
+									<button
+										th:if="${(updateDto.lessonId == l.id and onlyChoiceStudentsUpdate) or updateDto.lessonId != l.id}"
+										th:formaction="@{/methodist/lessons/choiceStudents}"
+										formmethod="post">Добавить студентов</button>
+									<button
+										th:if="${(updateDto.lessonId == l.id and onlyChoiceGroupsUpdate) or updateDto.lessonId != l.id}"
+										th:formaction="
+										@{/methodist/lessons/choiceGroups}"
+										formmethod="post">Добавить группы</button>
+									<button type="submit">Обновить</button></td>
+							</tr>
+						</table>
+					</form>
+				<td>
+					<form th:action="@{/methodist/lessons/{id}/delete(id=${l.id})}"
+						method="post">
+						<button type="submit">Удалить</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div>
+		<form th:action="@{/methodist/lessons/new}" method="post"
+			th:object="${newLesson}">
+			<input type="hidden" name="status" th:value="PLANNED" /> <input
+				type="hidden" name="page" th:value="${currentPage}" /> <input
+				type="hidden" name="size" th:value="${pageSize}" /> <input
+				type="hidden" name="source" value="dto" />
+			<th:block th:each="s : ${studentsDto}">
+				<input type="hidden" name="studentIds" th:value="${s.id}" />
+			</th:block>
+			<th:block th:each="g : ${groupsDto}">
+				<input type="hidden" name="groupIds" th:value="${g.id}" />
+			</th:block>
+			<select th:field="*{courseId}" required="required">
+				<option value="">--выбирите курс--</option>
+				<option th:each="c : ${courses}" th:text="${c.courseName}"
+					th:value="${c.id}"></option>
+			</select> <select th:field="*{roomId}" required="required">
+				<option value="">--выбирите комнату--</option>
+				<option th:each="r : ${rooms}" th:text="${r.number}"
+					th:value="${r.id}"></option>
+			</select> <label for="from"><input id="from" type="date"
+				th:field="*{from}" required="required" /></label> <label for="startTime"><input
+				id="startTime" type="time" min="08:00" max="19:10"
+				th:field="*{startTime}" required="required" /></label> <label for="endTime"><input
+				id="endTime" type="time" min="08:50" max="20:00"
+				th:field="*{endTime}" required="required" /></label> <select
+				th:if="${dto != null and !groupsDto.isEmpty()}">
+				<option>--список групп--</option>
+				<option th:each="g : ${groupsDto}" th:text="${g.name}"></option>
+			</select> <select th:if="${dto != null and !studentsDto.isEmpty()}">
+				<option>--список студентов--</option>
+				<option th:each="s : ${studentsDto}"
+					th:text="${s.user.firstName + ' ' + s.user.lastName}"></option>
+			</select>
+
+			<button th:if="${onlyChoiceStudentsNew or choiceStudentsOrGroups}"
+				th:formaction="@{/methodist/lessons/choiceStudents}"
+				th:formmethod="post">Выбрать студетнов</button>
+			<button th:if="${onlyChoiceGroupsNew or choiceStudentsOrGroups}"
+				th:formaction="@{/methodist/lessons/choiceGroups}"
+				th:formmethod="post">Выбрать группы</button>
+			<div th:if="${errors}">
+				<p style="color: red" th:each="e : ${errors}"
+					th:text="${e.defaultMessage}">Error Message</p>
+			</div>
+			<button type="submit">Создать</button>
+		</form>
+	</div>
+	<div th:replace="pagination :: content"></div>
+
+	<div>
+		<h2>
+			<a th:href="@{/home}">Home</a>
+		</h2>
+	</div>
+</body>
+</html>

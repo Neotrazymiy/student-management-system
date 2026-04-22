@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>University</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Дуйствия</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="u : ${universitys}">
+				<td>
+					<form th:action="@{/admin/universitys/{id}/update(id=${u.id})}"
+						method="post">
+						<label> <input name="name" type="text"
+							th:value="${u.name}" required />
+						</label>
+						<button type="submit">Схранить изменения</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/admin/universitys/{id}/delete(id=${u.id})}"
+						method="post">
+						<button type="submit">Удалить</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		<form th:object="${newUniversity}"
+			th:action="@{/admin/universitys/new}" method="post">
+			<input type="text" name="name" th:field="*{name}"
+				placeholder="Название нового университета" required />
+			<button type="submit">Добавить</button>
+		</form>
+	</div>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<div>
+		<form th:action="@{/admin/universitys/import}" method="post"
+			enctype="multipart/form-data">
+			<label for="file">Выберите файл (.csv или .xlsx):</label> <input
+				type="file" id="file" name="file" accept=".csv, .xlsx" required />
+			<button type="submit">Импортировать</button>
+		</form>
+		<span th:if="${message}" th:text="${message}"></span>
+	</div>
+
+	<div>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Room</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>Number</td>
+				<td>Дуйствия</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="r : ${pageRoom.content}">
+				<td>
+					<form th:action="@{/admin/rooms/{id}/update(id=${r.id})}"
+						method="post">
+						<input type="hidden" name="page" th:value="${currentPage}" /> <input
+							type="hidden" name="size" th:value="${pageSize}" /> <label>
+							<input name="number" type="text" th:value="${r.number}" required />
+						</label>
+						<button type="submit">Схранить изменения</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{/admin/rooms/{id}/delete(id=${r.id})}"
+						method="post">
+						<input type="hidden" name="page" th:value="${currentPage}" /> <input
+							type="hidden" name="size" th:value="${pageSize}" />
+						<button type="submit">Удалить</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:if="${currentPage + 1 == totalPage}">
+		<form th:object="${newRoom}" th:action="@{/admin/rooms/new}"
+			method="post">
+			<input type="hidden" name="page" th:value="${currentPage}" /> <input
+				type="hidden" name="size" th:value="${pageSize}" /> <input
+				type="text" name="number" th:field="*{number}"
+				placeholder="Название новой комнаты" required />
+			<button type="submit">Добавить</button>
+		</form>
+	</div>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<ul th:replace="pagination :: content"></ul>
+
+	<div>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>University</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<h1>
+			Роли: <span th:text="${#authentication.authorities}"></span>
+		</h1>
+		<div th:if="${#authentication != null}">
+			<p>
+				Вы вошли под именем - <b th:text="${#httpServletRequest.remoteUser}"></b>
+			</p>
+			<form th:action="@{/logout}" method="post">
+				<button type="submit" class="btn btn-link">Выйти</button>
+			</form>
+		</div>
+		<p>
+			Выберите раздел из меню. <span th:text="${appName}"></span>
+		</p>
+		<div sec:authorize="hasRole('ROLE_ADMIN')"
+			th:replace="admin/adminHome :: admin"></div>
+		<div sec:authorize="hasRole('ROLE_STUDENT')"
+			th:replace="student/studentHome :: student"></div>
+		<div sec:authorize="hasRole('ROLE_TEACHER')"
+			th:replace="teacher/teacherHome :: teacher"></div>
+		<div sec:authorize="hasRole('ROLE_QUEST')"
+			th:replace="quest/questHome :: quest"></div>
+		<div sec:authorize="hasRole('ROLE_METHODIST')"
+			th:replace="methodist/methodistHome :: methodist"></div>
+	</div>
+</body>
+</html>

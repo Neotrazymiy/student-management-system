@@ -1,0 +1,27 @@
+<div th:fragment="lessons">
+	<h2>Lessons</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Урок</th>
+				<th>Номер аудитории</th>
+				<th>Дата Урока</th>
+				<th>Начало урока</th>
+				<th>Конец урока</th>
+				<th>статус</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="l : ${pageLesson.content}">
+				<td th:text="${l.course.courseName}"></td>
+				<td th:text="${l.room.number}"></td>
+				<td th:text="${l.date}"></td>
+				<td th:text="${l.startTime}"></td>
+				<td th:text="${l.endTime}"></td>
+				<td th:text="${l.status}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<ul th:replace="pagination :: content">
+	</ul>
+</div>

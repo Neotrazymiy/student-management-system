@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Редактирование учителя</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Редактирование учителя</h2>
+
+	<form th:object="${teacher}"
+		th:action="@{/admin/teachers/{id}/update(id=${teacher.id})}"
+		method="post">
+		<input type="hidden" name="page" th:value="${currentPage}" /> <input
+			type="hidden" name="size" th:value="${pageSize}" /> <label>UserName:
+			<input type="text" th:field="*{user.userName}" />
+		</label><br> <label>Имя: <input type="text"
+			th:field="*{user.firstName}" />
+		</label><br> <label>Фамилия: <input type="text"
+			th:field="*{user.lastName}" /></label><br> <label>Mail: <input
+			type="text" th:field="*{user.email}" />
+		</label><br> <label for="passwordHash">Пароль: <input
+			id="passwordHash" type="password" th:field="*{user.passwordHash}" /></label><br>
+		<label>Департамент: <span
+			th:text="${teacher.department != null ? teacher.department.name : '-'}"></span><a
+			href="#" onclick="return false;">Присвоить/поменять</a> <input
+			type="hidden" name="departmentId"
+			th:value="${teacher.department != null ? teacher.department.id : null}" />
+		</label><br> <label>Курсы: <span th:each="c : ${teacher.courses}"
+			th:text="${c.courseName + ' '}"> </span><a href="#"
+			onclick="return false;">Добавить/удалить курс</a> <th:block
+				th:each="c : ${teacher.courses}">
+				<input type="hidden" name="courseIds" th:value="${c.id}" />
+			</th:block></label><br> <label>Уроки: <span
+			th:each="c : ${teacher.lessons}" th:text="${c.room.number}"></span><a
+			href="#" onclick="return false;">Добавить/удалить урок</a> <th:block
+				th:each="l : ${teacher.lessons}">
+				<input type="hidden" name="lessonIds" th:value="${l.id}" />
+			</th:block>
+		</label><br> <label>Роли: <span
+			th:each="role : ${teacher.user.roles}" th:text="${role.name} + ' '"></span><a
+			th:href="@{|/admin/teachers/${teacher.user.id}/roles?returnUrl=/admin/teachers/${teacher.id}|}">Редактировать/добавить</a>
+			<th:block th:each="role : ${teacher.user.roles}">
+				<input type="hidden" name="user.roleIds" th:value="${role.id}" />
+			</th:block>
+		</label><br>
+		<button type="submit">Сохранить</button>
+	</form>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<h2>
+		<a th:href="@{/admin/teachers}">Список учителей</a>
+	</h2>
+</body>
+</html>

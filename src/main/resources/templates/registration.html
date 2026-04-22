@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Registration</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<form th:object="${user}" th:action="@{/quest/registration/edit}"
+			method="post">
+			<label for="userName">Логин: <input id="userName" type="text"
+				th:field="*{userName}" required="required" />
+			</label><br> <label for="firstName">Имя: <input id="firstName"
+				type="text" th:field="*{firstName}" required="required" /></label><br>
+			<label for="lastName">Фамилия: <input id="lastName"
+				type="text" th:field="*{lastName}" required="required" />
+			</label><br> <label for="email">Email: <input id="email"
+				type="text" th:field="*{email}" required="required" /></label><br> <label
+				for="password">Пароль: <input id="password" type="password"
+				th:field="*{passwordHash}" required="required" />
+			</label><br>
+			<button type="submit">Сохранить</button>
+		</form>
+	</div>
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+	<div>
+		<h2>
+			<a th:href="@{/login}">Авторизация</a>
+		</h2>
+	</div>
+</body>
+</html>

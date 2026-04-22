@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Список пользователей</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2>Список пользователей</h2>
+	<form th:action="@{/admin/users/new}" style="display: inline"
+		th:if="${currentPage + 1 == totalPage}">
+		<button type="submit">Создать пользователя</button>
+	</form>
+	<table>
+		<tr>
+			<th>Логин</th>
+			<th>Имя</th>
+			<th>Фамилия</th>
+			<th>Mail</th>
+			<th>Роли</th>
+			<th>Дуйствия</th>
+		</tr>
+		<tr th:each="u : ${pageUser.content}">
+			<td th:text="${u.userName}"></td>
+			<td th:text="${u.firstName}"></td>
+			<td th:text="${u.lastName}"></td>
+			<td th:text="${u.email}"></td>
+			<td th:text="${#strings.listJoin(u.roles.![name], ', ')}"></td>
+			<td><form th:action="@{/admin/users/{id}(id=${u.id})}"
+					style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Редактирование пользователя</button>
+				</form>
+				<form th:action="@{/admin/users/{id}/delete(id=${u.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Удалить</button>
+				</form>
+				<form th:action="@{/admin/teachers/{id}/new(id=${u.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Сделать учителем</button>
+				</form>
+				<form th:action="@{/admin/students/{id}/new(id=${u.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Сделать студентом</button>
+				</form>
+				<form th:action="@{/admin/admins/{id}/new(id=${u.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Сделать администратором</button>
+				</form>
+				<form th:action="@{/admin/methodist/{id}/new(id=${u.id})}"
+					method="post" style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Сделать помошником администратора</button>
+				</form>
+				<form
+					th:if="${!#lists.isEmpty(u.roles.?[name == 'ROLE_ADMIN' or name == 'ROLE_METHODIST'])}"
+					th:action="@{/admin/admins/{id}/delete(id=${u.id})}" method="post"
+					style="display: inline">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<button type="submit">Розжаловать</button>
+				</form></td>
+		</tr>
+	</table>
+	<ul th:replace="pagination :: content"></ul>
+	<h1>
+		<a th:href="@{/home}">Home</a>
+	</h1>
+
+</body>
+</html>

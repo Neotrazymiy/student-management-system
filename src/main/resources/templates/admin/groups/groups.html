@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Group</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+
+	<table>
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Департамент</td>
+				<td>Действия</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="g : ${pageGroup.content}">
+				<form th:action="@{/admin/groups/{id}/update(id=${g.id})}"
+					method="post">
+					<input type="hidden" name="page" th:value="${currentPage}" /> <input
+						type="hidden" name="size" th:value="${pageSize}" />
+					<td><input type="text" name="name" th:value="${g.name}"
+						required /></td>
+					<td><select name="departmentId">
+							<option value="">-- выбирите департамент --</option>
+							<option th:each="d : ${departments}" th:text="${d.name}"
+								th:value="${d.id}"
+								th:selected="${g.department != null and g.department.id == d.id}">
+							</option>
+					</select>
+						<button type="submit">Сохранить изменения</button></td>
+				</form>
+				<td>
+					<form th:action="@{/admin/groups/{id}/delete(id=${g.id})}"
+						method="post">
+						<input type="hidden" name="page" th:value="${currentPage}" /> <input
+							type="hidden" name="size" th:value="${pageSize}" />
+						<button type="submit">Удалить</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<form th:object="${newGroup}" th:action="@{/admin/groups/new}"
+		method="post" th:if="${currentPage + 1 == totalPage}">
+		<input type="hidden" name="page" th:value="${currentPage}" /> <input
+			type="hidden" name="size" th:value="${pageSize}" /> <input
+			type="text" th:field="*{name}" placeholder="Название группы" required />
+		<select name="departmentId" required>
+			<option value="">-- выбирите департамент --</option>
+			<option th:each="d : ${departments}" th:text="${d.name}"
+				th:value="${d.id}"></option>
+		</select>
+		<button type="submit">Добавить группу</button>
+	</form>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+
+	<ul th:replace="pagination :: content"></ul>
+	<div>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

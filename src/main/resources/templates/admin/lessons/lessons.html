@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lessons</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Курс</th>
+				<th>Комната</th>
+				<th>Дата</th>
+				<th>Начало урока</th>
+				<th>Конец урока</th>
+				<th>Действия</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="l : ${pageLesson.content}">
+				<td colspan="6">
+					<form th:action="@{/admin/lessons/{id}/update(id=${l.id})}"
+						method="post" th:object="${newLesson}">
+						<input type="hidden" name="status" th:value="${l.status}" /> <input
+							type="hidden" name="page" th:value="${currentPage}" /> <input
+							type="hidden" name="size" th:value="${pageSize}" />
+						<table>
+							<tr>
+								<td><select name="courseId" required="required">
+										<option value="">--выбирите курс--</option>
+										<option th:each="c : ${courses}" th:text="${c.courseName}"
+											th:value="${c.id}" th:selected="${l.course.id == c.id}"></option>
+								</select></td>
+								<td><select name="roomId" required="required">
+										<option value="">--выбирите комнату--</option>
+										<option th:each="r : ${rooms}" th:text="${r.number}"
+											th:value="${r.id}" th:selected="${l.room.id == r.id}"></option>
+								</select></td>
+								<td><label for="from"><input id="from" type="date"
+										name="from"
+										th:value="${#temporals.format(l.date, 'yyyy-MM-dd')}"
+										required="required" /></label></td>
+								<td><label for="startTime"><input id="startTime"
+										type="time" min="08:00" max="19:10" name="startTime"
+										th:value="${#temporals.format(l.startTime, 'HH:mm')}"
+										required="required" /></label></td>
+								<td><label for="endTime"><input id="endTime"
+										type="time" min="08:50" max="20:00" name="endTime"
+										th:value="${#temporals.format(l.endTime, 'HH:mm')}"
+										required="required" /></label>
+									<button type="submit">Обновить</button></td>
+							</tr>
+						</table>
+					</form>
+				<td><form th:action="@{/admin/lessons/{id}/delete(id=${l.id})}"
+						method="post">
+						<button type="submit">Удалить</button>
+					</form></td>
+
+				<td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div>
+		<form th:action="@{/admin/lessons/new}" method="post"
+			th:object="${newLesson}">
+			<select th:field="*{courseId}" required="required">
+				<option value="">--выбирите курс--</option>
+				<option th:each="c : ${courses}" th:text="${c.courseName}"
+					th:value="${c.id}"></option>
+			</select> <select th:field="*{roomId}" required="required">
+				<option value="">--выбирите комнату--</option>
+				<option th:each="r : ${rooms}" th:text="${r.number}"
+					th:value="${r.id}"></option>
+			</select> <label for="from"><input id="from" type="date"
+				th:field="*{from}" required="required" /></label> <label for="startTime"><input
+				id="startTime" type="time" min="08:00" max="19:10"
+				th:field="*{startTime}" required="required" /></label> <label for="endTime"><input
+				id="endTime" type="time" min="08:50" max="20:00"
+				th:field="*{endTime}" required="required" /></label> <input type="hidden"
+				name="status" th:value="PLANNED" /> <input type="hidden"
+				name="page" th:value="${currentPage}" /> <input type="hidden"
+				name="size" th:value="${pageSize}" />
+			<div th:if="${errors}">
+				<p style="color: red" th:each="e : ${errors}"
+					th:text="${e.defaultMessage}">Error Message</p>
+			</div>
+			<button type="submit">Создать</button>
+		</form>
+	</div>
+	<div th:replace="pagination :: content"></div>
+
+	<div>
+		<h2>
+			<a th:href="@{/home}">Home</a>
+		</h2>
+	</div>
+</body>
+</html>

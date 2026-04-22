@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lessons</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<div>
+		<h2>Lessons</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Number</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="r : ${pageRoom.content}">
+					<td th:text="${r.number}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<ul th:replace="pagination :: content">
+		</ul>
+		<h1>
+			<a th:href="@{/home}">Home</a>
+		</h1>
+	</div>
+</body>
+</html>

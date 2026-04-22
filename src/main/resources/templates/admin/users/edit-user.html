@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Рудактирование</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}">
+</head>
+<body>
+	<h2
+		th:text="${userId} == null ? 'Новый пользователь' : 'Редактирование пользователя'"></h2>
+
+	<form th:object="${user}"
+		th:action="${userId} == null ? @{/admin/users} : @{/admin/users/{id}/update(id=${user.id})}"
+		method="post">
+		<input type="hidden" name="page" th:value="${currentPage}" /> <input
+			type="hidden" name="size" th:value="${pageSize}" /> <label
+			for="userName">Логин: <input id="userName" type="text"
+			th:field="*{userName}" />
+		</label><br> <label for="firstName">Имя: <input id="firstName"
+			type="text" th:field="*{firstName}" /></label><br> <label
+			for="lastName">Фамилия: <input id="lastName" type="text"
+			th:field="*{lastName}" /></label><br> <label for="email">Mail:
+			<input id="email" type="text" th:field="*{email}" />
+		</label><br> <label for="passwordHash">Пароль: <input
+			id="passwordHash" type="password" th:field="*{passwordHash}" /></label><br>
+		<button type="submit">Сохронить</button>
+	</form>
+
+	<div th:if="${errors}">
+		<p style="color: red" th:each="e : ${errors}"
+			th:text="${e.defaultMessage}">Error Message</p>
+	</div>
+	<h3>
+		<a th:href="@{/admin/admins}">Список пользователеей</a>
+	</h3>
+</body>
+</html>
