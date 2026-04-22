@@ -36,12 +36,6 @@ This project simulates a university management system with role-based access and
 - Repository layer
 - DTO / Mapper layer
 
-## Live Demo
-Application is available at:
-http://your-url
-
-Authentication is required.
-
 ## What I learned
 - Designing layered backend architecture
 - Implementing role-based access control
