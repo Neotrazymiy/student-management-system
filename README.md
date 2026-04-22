@@ -1,10 +1,11 @@
 # Student Management System
 
-Backend application for managing the educational process at a university.
+## About the project
+This project simulates a university management system with role-based access and backend business logic.
 
 ## Features
 - Role-based access control (Admin, Teacher, Student)
-- Authentication and authorization with Spring Security (including OAuth2)
+- Authentication and authorization with Spring Security
 - REST API for managing:
   - Students
   - Teachers
@@ -15,38 +16,44 @@ Backend application for managing the educational process at a university.
 - DTO mapping using MapStruct
 - Logging and auditing using AOP
 - CSV import functionality
-- API documentation with Swagger
-- Database migrations and structured schema
+- Database migrations
 - Unit and integration testing
 
 ## Tech Stack
 - Java
 - Spring Boot
-- Spring Security (OAuth2)
+- Spring Security
 - Hibernate / JPA
 - PostgreSQL
 - JDBC
 - MapStruct
-- Swagger (OpenAPI)
 - AOP (Spring AOP)
 - JUnit / Mockito
-- Docker
 
 ## Architecture
-The application is built using a layered architecture:
-- Controller layer (REST endpoints)
-- Service layer (business logic)
-- Repository layer (data access)
-- DTO and Mapper layer (data transformation)
+- Controller layer
+- Service layer
+- Repository layer
+- DTO / Mapper layer
 
-## Testing
-- Unit tests using JUnit and Mockito
-- Integration tests for controllers and services
+## Live Demo
+Application is available at:
+http://your-url
 
-## How to Run
+Authentication is required.
+
+## What I learned
+- Designing layered backend architecture
+- Implementing role-based access control
+- Using AOP for cross-cutting concerns
+- Working with DTO mapping (MapStruct)
+- Writing unit and integration tests
+
+## Quick Start
 1. Clone the repository
-2. Configure application properties (DB, OAuth credentials)
-3. Run PostgreSQL
-4. Start the application:
-   ```bash
-   mvn spring-boot:run
+2. Configure `application.properties`
+3. Create PostgreSQL database
+4. Run with:
+
+```bash
+mvn spring-boot:run
