@@ -90,6 +90,7 @@ class UserRepositoryTest {
 		user.setLastName(USER_NAME_ONE);
 		user.setEnabled(true);
 		user.setPasswordHash(USER_NAME_ONE);
+		user.setFailedAttempts(0);
 		userRepository.save(user);
 		userRepository.deleteById(user.getId());
 		userRepository.flush();

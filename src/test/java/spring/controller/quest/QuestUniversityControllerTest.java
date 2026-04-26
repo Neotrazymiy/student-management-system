@@ -23,6 +23,7 @@ import spring.auxiliaryObjects.CreateObjects;
 import spring.config.SecurityConfig;
 import spring.dto.UniversityReadDto;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.UniversityService;
 
 @WebMvcTest(controllers = QuestUniversityController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -36,6 +37,9 @@ class QuestUniversityControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

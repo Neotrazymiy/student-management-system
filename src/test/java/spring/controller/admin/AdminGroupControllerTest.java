@@ -41,6 +41,7 @@ import spring.exception.DeleteException;
 import spring.service.CastomUserDetailsService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 
 @WebMvcTest(controllers = AdminGroupController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class AdminGroupControllerTest {
@@ -56,6 +57,9 @@ class AdminGroupControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final String NAME = "namenamename";
 	private static final UUID group_ID = UUID.randomUUID();

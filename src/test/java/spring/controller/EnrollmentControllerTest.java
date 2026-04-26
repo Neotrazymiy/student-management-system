@@ -30,6 +30,7 @@ import spring.dto.UserReadDto;
 import spring.model.EnrollmentStatus;
 import spring.service.CastomUserDetailsService;
 import spring.service.EnrollmentService;
+import spring.service.IpBlockService;
 
 @WebMvcTest(controllers = EnrollmentController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class EnrollmentControllerTest {
@@ -42,6 +43,9 @@ class EnrollmentControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	@Test
 	@WithMockUser(username = "admin", roles = { "ADMIN" })

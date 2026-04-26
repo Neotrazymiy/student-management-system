@@ -34,6 +34,7 @@ import spring.dto.RoleReadDto;
 import spring.exception.DeleteException;
 import spring.model.RoleElement;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.RoleService;
 
 @WebMvcTest(controllers = AdminRoleController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -47,6 +48,9 @@ class AdminRoleControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final String NAME = "ROLE_QWEQWE";
 	private static final UUID role_ID = UUID.randomUUID();

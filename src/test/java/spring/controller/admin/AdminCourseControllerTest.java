@@ -45,6 +45,7 @@ import spring.service.CastomUserDetailsService;
 import spring.service.CourseService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 import spring.service.TeacherService;
 
 @WebMvcTest(controllers = AdminCourseController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -64,6 +65,9 @@ class AdminCourseControllerTest {
 
 	@MockBean
 	private AdminService adminService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	@MockBean
 	private TeacherService teacherService;

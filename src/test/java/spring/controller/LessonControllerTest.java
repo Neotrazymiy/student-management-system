@@ -27,6 +27,7 @@ import spring.dto.CourseReadDto;
 import spring.dto.LessonReadDto;
 import spring.dto.RoomReadDto;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.LessonService;
 
 @WebMvcTest(controllers = LessonController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -40,6 +41,9 @@ class LessonControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	@Test
 	@WithMockUser(username = "admin", roles = { "ADMIN" })

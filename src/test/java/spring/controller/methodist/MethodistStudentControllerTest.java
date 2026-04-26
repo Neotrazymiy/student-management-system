@@ -31,6 +31,7 @@ import spring.dto.StudentReadDto;
 import spring.model.RoleElement;
 import spring.service.CastomUserDetailsService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 import spring.service.StudentService;
 
 @WebMvcTest(controllers = MethodistStudentController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -47,6 +48,9 @@ class MethodistStudentControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

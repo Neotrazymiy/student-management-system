@@ -49,6 +49,7 @@ import spring.model.RoleElement;
 import spring.service.AdminService;
 import spring.service.CastomUserDetailsService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 import spring.service.RoleService;
 import spring.service.StudentService;
 import spring.service.UserService;
@@ -76,6 +77,9 @@ class AdminStudentControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final UUID STUDENT_ID = UUID.randomUUID();
 	private static final String NAME = "namenamename";

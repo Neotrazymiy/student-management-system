@@ -44,6 +44,7 @@ import spring.model.DateFilter;
 import spring.service.CalendarService;
 import spring.service.CastomUserDetailsService;
 import spring.service.DepartmentService;
+import spring.service.IpBlockService;
 import spring.service.LessonService;
 
 @WebMvcTest(controllers = TeacherLessonController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -63,6 +64,9 @@ class TeacherLessonControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

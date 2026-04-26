@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import spring.config.SecurityConfig;
 import spring.dto.UserAddEditDto;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.UserService;
 
 @WebMvcTest(controllers = QuestRegistrationController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -39,6 +40,9 @@ class QuestRegistrationControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	@Test
 	@WithMockUser(username = "quest", roles = { "QUEST" })

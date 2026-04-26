@@ -38,6 +38,7 @@ import spring.dto.UniversityReadDto;
 import spring.exception.DeleteException;
 import spring.model.University;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.UniversityService;
 import spring.service.importt.CsvService;
 import spring.service.importt.XlsxService;
@@ -60,6 +61,9 @@ class AdminUniversityControllerTest {
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
 
+	@MockBean
+	private IpBlockService ipBlockService;
+	
 	private static final String NAME = "namenamename";
 	private static final UUID UNIVERSITY_ID = UUID.randomUUID();
 	private CreateObjects createObjects = new CreateObjects();

@@ -24,6 +24,7 @@ import spring.config.SecurityConfig;
 import spring.dto.FacultyReadDto;
 import spring.service.CastomUserDetailsService;
 import spring.service.FacultyService;
+import spring.service.IpBlockService;
 
 @WebMvcTest(controllers = QuestFacultyController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class QuestFacultyControllerTest {
@@ -36,6 +37,9 @@ class QuestFacultyControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

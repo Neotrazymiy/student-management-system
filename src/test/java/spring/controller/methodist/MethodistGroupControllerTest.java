@@ -39,6 +39,7 @@ import spring.dto.GroupReadDto;
 import spring.service.CastomUserDetailsService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 
 @WebMvcTest(controllers = MethodistGroupController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class MethodistGroupControllerTest {
@@ -54,6 +55,9 @@ class MethodistGroupControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final String NAME = "namenamename";
 	private static final UUID group_ID = UUID.randomUUID();

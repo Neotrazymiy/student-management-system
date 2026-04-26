@@ -42,6 +42,7 @@ import spring.service.CastomUserDetailsService;
 import spring.service.CourseService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 import spring.service.LessonService;
 import spring.service.MethodistService;
 import spring.service.RoomService;
@@ -83,6 +84,9 @@ class StudentLessonControllerTest {
 	
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

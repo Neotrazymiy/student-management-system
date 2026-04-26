@@ -28,6 +28,7 @@ import spring.dto.GroupReadDto;
 import spring.service.CastomUserDetailsService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 
 @WebMvcTest(controllers = StudentGroupController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class StudentGroupControllerTest {
@@ -43,6 +44,9 @@ class StudentGroupControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

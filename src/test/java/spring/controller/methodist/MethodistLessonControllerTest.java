@@ -50,6 +50,7 @@ import spring.service.CastomUserDetailsService;
 import spring.service.CourseService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 import spring.service.LessonService;
 import spring.service.MethodistService;
 import spring.service.RoomService;
@@ -91,6 +92,9 @@ class MethodistLessonControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final UUID LESSON_ID = UUID.randomUUID();
 	private CreateObjects createObjects = new CreateObjects();

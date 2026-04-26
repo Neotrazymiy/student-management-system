@@ -37,6 +37,7 @@ import spring.dto.RoomAddEditDto;
 import spring.dto.RoomReadDto;
 import spring.exception.DeleteException;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.RoomService;
 
 @WebMvcTest(controllers = AdminRoomController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -50,6 +51,9 @@ class AdminRoomControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final String NUMBER = "1_B";
 	private static final UUID ROOM_ID = UUID.randomUUID();

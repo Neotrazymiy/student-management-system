@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import spring.config.SecurityConfig;
 import spring.dto.UniversityReadDto;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.UniversityService;
 
 @WebMvcTest(controllers = UniversityController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -36,6 +37,9 @@ class UniversityControllerTest {
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
 
+	@MockBean
+	private IpBlockService ipBlockService;
+	
 	@Test
 	@WithMockUser(username = "admin", roles = { "ADMIN" })
 	void test() throws Exception {

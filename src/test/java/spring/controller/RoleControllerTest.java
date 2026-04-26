@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import spring.config.SecurityConfig;
 import spring.dto.RoleReadDto;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.RoleService;
 
 @WebMvcTest(controllers = RoleController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -38,6 +39,9 @@ class RoleControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	@Test
 	@WithMockUser(username = "admin", roles = { "ADMIN" })

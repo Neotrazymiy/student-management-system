@@ -35,6 +35,7 @@ import spring.dto.UniversityReadDto;
 import spring.exception.DeleteException;
 import spring.service.CastomUserDetailsService;
 import spring.service.FacultyService;
+import spring.service.IpBlockService;
 import spring.service.UniversityService;
 
 @WebMvcTest(controllers = AdminFacultyController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -52,6 +53,9 @@ class AdminFacultyControllerTest {
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
 
+	@MockBean
+	private IpBlockService ipBlockService;
+	
 	private static final String NAME = "namenamename";
 	private static final UUID FACULTY_ID = UUID.randomUUID();
 	private CreateObjects createObjects = new CreateObjects();

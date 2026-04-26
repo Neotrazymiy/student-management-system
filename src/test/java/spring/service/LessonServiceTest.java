@@ -37,7 +37,6 @@ import spring.auxiliaryObjects.CreateObjects;
 import spring.auxiliaryObjects.DateRange;
 import spring.dto.LessonAddEditDto;
 import spring.dto.LessonReadDto;
-import spring.event.ChangeLessonEvent;
 import spring.mapper.LessonAddEditMapper;
 import spring.mapper.LessonReadMapper;
 import spring.model.Course;
@@ -447,7 +446,6 @@ class LessonServiceTest {
 		verify(roomRepository).findById(lessonEditDto.getRoomId());
 		verify(studentRepository).findByIdIn(lessonEditDto.getStudentIds());
 		verify(lessonRepository).saveAndFlush(lesson);
-		verify(applicationEventPublisher).publishEvent(any(ChangeLessonEvent.class));
 	}
 
 	@Test

@@ -36,6 +36,7 @@ import spring.exception.DeleteException;
 import spring.service.CastomUserDetailsService;
 import spring.service.DepartmentService;
 import spring.service.FacultyService;
+import spring.service.IpBlockService;
 
 @WebMvcTest(controllers = AdminDepartmentController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class AdminDepartmentControllerTest {
@@ -51,6 +52,9 @@ class AdminDepartmentControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final String NAME = "namenamename";
 	private static final UUID DEPARTMENT_ID = UUID.randomUUID();

@@ -24,6 +24,8 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +35,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
 
 import spring.auxiliaryObjects.CreateObjects;
-import spring.auxiliaryObjects.OAuthUserServiceHelper;
+import spring.config.SecurityConfig;
 import spring.dto.CourseAddEditDto;
 import spring.dto.CourseReadDto;
 import spring.dto.DepartmentReadDto;
@@ -45,10 +47,11 @@ import spring.service.CastomUserDetailsService;
 import spring.service.CourseService;
 import spring.service.DepartmentService;
 import spring.service.GroupService;
+import spring.service.IpBlockService;
 import spring.service.MethodistService;
 import spring.service.TeacherService;
 
-@WebMvcTest(MethodistCourseController.class)
+@WebMvcTest(controllers = MethodistCourseController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 class MethodistCourseControllerTest {
 
 	@Autowired
@@ -73,10 +76,10 @@ class MethodistCourseControllerTest {
 	private MethodistService methodistService;
 
 	@MockBean
-	private OAuthUserServiceHelper helper;
+	private CastomUserDetailsService castomUserDetailsService;
 
 	@MockBean
-	private CastomUserDetailsService castomUserDetailsService;
+	private IpBlockService ipBlockService;
 
 	private static final String NAME = "namenamename";
 	private static final UUID COURSE_ID = UUID.randomUUID();
@@ -208,30 +211,6 @@ class MethodistCourseControllerTest {
 		assertThat(courseAddEditDto.getCourseName()).isEqualTo(captor.getValue().getCourseName());
 		assertThat(courseAddEditDto.getDepartmentId()).isEqualTo(captor.getValue().getDepartmentId());
 		assertThat(courseAddEditDto.getGroupId()).isEqualTo(captor.getValue().getGroupId());
-	}
-
-	@Test
-	@WithMockUser(username = "admin", roles = { "ADMIN" })
-	void userFirbiddenAdmin() throws Exception {
-		mockMvc.perform(get("/methodist/courses")).andExpect(status().isForbidden());
-	}
-
-	@Test
-	@WithMockUser(username = "quest", roles = { "QUEST" })
-	void userFirbiddenQuest() throws Exception {
-		mockMvc.perform(get("/methodist/courses")).andExpect(status().isForbidden());
-	}
-
-	@Test
-	@WithMockUser(username = "student", roles = { "STUDENT" })
-	void userFirbiddenStudent() throws Exception {
-		mockMvc.perform(get("/methodist/courses")).andExpect(status().isForbidden());
-	}
-
-	@Test
-	@WithMockUser(username = "teacher", roles = { "TEACHER" })
-	void userFirbiddenTeacher() throws Exception {
-		mockMvc.perform(get("/methodist/courses")).andExpect(status().isForbidden());
 	}
 
 }

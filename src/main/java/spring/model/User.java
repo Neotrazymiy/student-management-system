@@ -53,8 +53,9 @@ public class User {
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
+	@Builder.Default
 	@Column(name = "failed_attempts", nullable = false)
-	private Integer failedAttempts;
+	private Integer failedAttempts = 0;
 
 	@Column(name = "blocking_time")
 	private LocalDateTime blockingTime;

@@ -27,6 +27,7 @@ import spring.auxiliaryObjects.CreateObjects;
 import spring.config.SecurityConfig;
 import spring.dto.RoomReadDto;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.RoomService;
 
 @WebMvcTest(controllers = QuestRoomController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
@@ -40,6 +41,9 @@ class QuestRoomControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private CreateObjects createObjects = new CreateObjects();
 

@@ -47,6 +47,7 @@ import spring.dto.UserReadDto;
 import spring.model.RoleElement;
 import spring.service.AdminService;
 import spring.service.CastomUserDetailsService;
+import spring.service.IpBlockService;
 import spring.service.RoleService;
 import spring.service.TeacherService;
 import spring.service.UserService;
@@ -71,6 +72,9 @@ class AdminTeacherControllerTest {
 
 	@MockBean
 	private CastomUserDetailsService castomUserDetailsService;
+	
+	@MockBean
+	private IpBlockService ipBlockService;
 
 	private static final String NAME = "namenamename";
 	private static final UUID TEACHER_ID = UUID.randomUUID();
