@@ -26,6 +26,8 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 			Authentication authentication) throws ServletException, IOException {
 		loginAttemptService.onSuccess(authentication.getName());
 		ipBlockService.onSuccess(getClientIp(request));
+		setAlwaysUseDefaultTargetUrl(true);
+		setDefaultTargetUrl("/home");
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 
