@@ -7,7 +7,7 @@ This project simulates a university management system with role-based access and
 
 The application is deployed on Render:
 
-[login](https://student-management-system-6eri.onrender.com)
+[Login](https://student-management-system-6eri.onrender.com)
 
 ## Demo Credentials
 
