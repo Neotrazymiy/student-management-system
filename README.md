@@ -1,20 +1,36 @@
 # Student Management System
 
 ## About the project
-This project simulates a university management system with role-based access and backend business logic.
+This project is a full-featured backend system that simulates a university management platform with role-based access control, authentication, and complex business logic.
+
+It demonstrates real-world backend development practices including layered architecture, security, data validation, and audit logging.
+
+ ## Key Highlights
+
+- Secure authentication with Spring Security and Google OAuth
+- Clean layered architecture (Controller → Service → Repository)
+- DTO mapping with MapStruct
+- Audit logging using AOP
+- CSV import for bulk operations
 
 ## Live Demo
 
 The application is deployed on Render:
 
-[Login](https://student-management-system-6eri.onrender.com)
+- Application: https://student-management-system-6eri.onrender.com
+- Login page: https://student-management-system-6eri.onrender.com/login
+
+№## Live Status
+⚠️ The application is hosted on Render (free tier), so the first request may take up to 30–60 seconds due to cold start.
 
 ## Demo Credentials
 
 Admin access:
 
 - Login: admin1  
-- Password: pass5  
+- Password: pass5
+ 
+Or use Google OAuth authentication.
 
 ## How to test
 
@@ -80,5 +96,5 @@ docker-compose up -d
 mvn spring-boot:run
 ```
 
-4. Open Swagger UI:
+4. Open application:
 http://localhost:8080/login
