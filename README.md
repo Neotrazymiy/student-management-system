@@ -3,6 +3,25 @@
 ## About the project
 This project simulates a university management system with role-based access and backend business logic.
 
+## Live Demo
+
+The application is deployed on Render:
+
+[login]https://student-management-system-6eri.onrender.com
+
+## Demo Credentials
+
+Admin access:
+
+- Login: admin1  
+- Password: pass5  
+
+## How to test
+
+1. Open the link above
+2. Log in using admin credentials or via Google OAuth
+3. Explore system functionality (users, lessons, roles, etc.)
+
 ## Features
 - Role-based access control (Admin, Teacher, Student)
 - Authentication and authorization with Spring Security
