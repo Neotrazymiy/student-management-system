@@ -62,11 +62,23 @@ Admin access:
 - Working with DTO mapping (MapStruct)
 - Writing unit and integration tests
 
-## Quick Start
-1. Clone the repository
-2. Configure `application.properties`
-3. Create PostgreSQL database
-4. Run with:
+## Quick Start (Docker)
 
+1. Clone the repository
+```bash
+git clone https://github.com/Neotrazymiy/student-management-system.git
+cd student-management-system
+```
+
+2. Start PostgreSQL using Docker:
+```bash
+docker-compose up -d
+```
+
+3. Run the application:
 ```bash
 mvn spring-boot:run
+```
+
+4. Open Swagger UI:
+http://localhost:8080/login
