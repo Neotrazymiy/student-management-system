@@ -164,7 +164,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					 <mainClass>spring.DistributionOfLessonsAtTheUniversittyApplication</mainClass>
 					<source>1.8</source>
 					<target>1.8</target>
 					<annotationProcessorPaths>
@@ -206,6 +205,13 @@
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 			</plugin>
+			plugin>
+    		<groupId>org.springframework.boot</groupId>
+  		    <artifactId>spring-boot-maven-plugin</artifactId>
+    			<configuration>
+       			 <mainClass>spring.DistributionOfLessonsAtTheUniversittyApplication</mainClass>
+  			  </configuration>
+		   </plugin>
 		</plugins>
 	</build>
 </project>
