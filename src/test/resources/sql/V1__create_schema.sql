@@ -1,3 +1,2 @@
-DROP SCHEMA IF EXISTS s CASCADE;
-DROP TABLE IF EXISTS public.flyway_schema_history CASCADE;
 CREATE SCHEMA IF NOT EXISTS s;
+SET search_path TO s;
