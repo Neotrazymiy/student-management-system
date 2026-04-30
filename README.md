@@ -21,7 +21,7 @@ The application is deployed on Render:
 - Login page: https://student-management-system-6eri.onrender.com/login
 
 ### Live Status
-⚠️ The application is hosted on Render (free tier), so the first request may take up to 30–60 seconds due to cold start.
+⚠️ The application is hosted on Render (free tier), so the first request may take up to 120-140 seconds due to cold start.
 
 ## Demo Credentials
 
